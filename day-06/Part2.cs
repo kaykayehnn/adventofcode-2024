@@ -68,12 +68,6 @@ class Part2
             }
         }
 
-        var mapCopy = new char[map.Length][];
-        for (var i = 0; i < map.Length; i++)
-        {
-            mapCopy[i] = new char[map[i].Length];
-        }
-
         int endless = 0;
         for (var i = 0; i < map.Length; i++)
         {
@@ -81,16 +75,9 @@ class Part2
             {
                 if (map[i][j] == '.')
                 {
-                    for (var k = 0; k < map.Length; k++)
-                    {
-                        for (var l = 0; l < map[k].Length; l++)
-                        {
-                            mapCopy[k][l] = map[k][l];
-                        }
-                    }
-
-                    mapCopy[i][j] = '#';
-                    if (CheckEndless(mapCopy, guardRow, guardCol)) endless++;
+                    map[i][j] = '#';
+                    if (CheckEndless(map, guardRow, guardCol)) endless++;
+                    map[i][j] = '.';
                 }
             }
         }
