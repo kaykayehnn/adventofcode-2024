@@ -1,6 +1,16 @@
 public class Path : IComparable<Path>
 {
+  private static int UniqueIdCounter = 0;
+  // This unique ID is used to differentiate between different routes that lead to the same cell.
+  // It is only required for part 2 of the challenge.
+  private int uniqueId;
   private int direction = 0;
+
+  public Path()
+  {
+    this.uniqueId = Path.UniqueIdCounter++;
+  }
+
   public static Vector GetDirectionVector(int direction)
   {
     int remainder = direction % 4;
@@ -34,21 +44,15 @@ public class Path : IComparable<Path>
       this.direction = (4 + value) % 4;
     }
   }
-  private int myVar;
-  public int MyProperty
-  {
-    get { return myVar; }
-    set { myVar = value; }
-  }
+  
+  public Path Prev { get; set; }
 
   public int Score { get; set; }
 
   public int CompareTo(Path? other)
   {
     int cmp = this.Score.CompareTo(other.Score);
-    if (cmp == 0) cmp = this.I.CompareTo(other.I);
-    if (cmp == 0) cmp = this.J.CompareTo(other.J);
-    if (cmp == 0) cmp = this.Direction.CompareTo(other.Direction);
+    if (cmp == 0) cmp = this.uniqueId.CompareTo(other.uniqueId);
     return cmp;
   }
 }
